@@ -2,6 +2,7 @@
 using ApiIntro.Resources;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-
+// https://www.npmjs.com/package/react-multi-lang
 
 namespace ApiIntro.Controllers
 {
@@ -20,13 +21,15 @@ namespace ApiIntro.Controllers
     {
 
         // bu resource dil dosyasına erişmemizi sağlayan servis.
-        // IHtmlLocalizer diye bir servis var onunla resx dosyasında html okuyabiliriz.
+        // IHtmlLocalizer diye bir servis var onunla resx dosyasında html okuyabiliriz. Mvc de kullanabiliriz.
         private readonly IStringLocalizer<Resource> _stringLocalizer;
+  
 
 
         public LanguagesController(IStringLocalizer<Resource> stringLocalizer)
         {
             _stringLocalizer = stringLocalizer;
+      
         }
 
         [HttpGet("lang")]
@@ -35,11 +38,18 @@ namespace ApiIntro.Controllers
             // hangi dildeysek bu dil ile alakalı key üzerinden value okuruz.
             string title =  _stringLocalizer.GetString("UserNotFound");
 
+            //var htmlContent = _htmlLocalizer.GetString("TitleHtml");
+
             //System.Globalization.CultureInfo.CurrentCulture.
             // GreenWich saati için UtcNow 
-            string date = DateTime.UtcNow.ToString();
+            string date = DateTime.Now.ToShortDateString();
+            decimal number = 2143.32432M;
+            //System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern
 
-            return Ok(System.Globalization.CultureInfo.CurrentCulture.Name);
+            //return Ok(htmlContent);
+
+
+            return Ok(new { today = date, number = number.ToString(), lang = System.Globalization.CultureInfo.CurrentCulture.Name });
         }
 
 

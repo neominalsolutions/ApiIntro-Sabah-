@@ -37,6 +37,7 @@ namespace ApiIntro
             services.AddControllers().AddXmlSerializerFormatters()
              .AddDataAnnotationsLocalization(o =>
               {
+                 
                   // Dil bazlý hata mesajlarý vermek için kullandýk.
                   // AddDataAnnotationsLocalization uygulamadaki DataAnnotationslarý Resource dosyasýndan oku 
                   o.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(DataAnnotations));
@@ -55,7 +56,17 @@ namespace ApiIntro
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ApiIntro", Version = "v1" });
             });
 
-            services.AddLocalization(); // Uygulamaya çoklu dil desteði ekle
+            // Not Resource dosyalarýný Resources klasörü altýna yazmaya özen gösterelim default bir isimlenmdirmedir.
+            services.AddLocalization();
+
+            // aþaðýdaki gibi kullanmayalým hataya sebep veriyor.
+            /*
+            services.AddLocalization(opt => {
+                opt.ResourcesPath = "Resource";
+            
+            }); // Uygulamaya çoklu dil desteði ekle
+
+            */
 
             services.AddRequestLocalization(options =>
             {
