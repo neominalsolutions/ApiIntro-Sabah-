@@ -269,5 +269,10 @@ namespace ApiIntro.Controllers
 
             return Created($"/api/products/{product.Id}", product);
         }
+
+
+        // config amaçlı headerdan veri gönderme işlemleri
+
+
     }
 }
